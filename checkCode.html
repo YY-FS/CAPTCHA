@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+    <title>PHP验证码</title>
+    <!--引入jquerycdn-->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+<!--引入获取验证码图片-->
+<img src="code.php" onclick="this.src='code.php?'+Math.random()">
+<!--输入验证码-->
+<input id="code" type="text" name="code">
+<!--AJAX提交-->
+<input id="checkCode" type="button" value="检查验证码">
+<!--输出结果-->
+<div>结果：<span style="color:red" id="result"></span></div>
+</body>
+<script type="text/javascript">
+    $('#checkCode').click(function () {
+        $.ajax({
+            url: "checkCode.php",
+            method: "get",
+            data: {
+                code: $("#code").val()      //传参
+            },
+            dataType: "json",
+            success: function (result) {
+                console.log(result)
+                $('#result').text(result.msg)   //改变页面的值
+            }
+        })
+    })
+</script>
+</html>

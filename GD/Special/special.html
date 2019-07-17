@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片特效</title>
+    <!--引入jquerycdn-->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <style>
+        .box {
+            margin: 20px auto;
+            width: 400px;
+        }
+
+        #filter {
+            width: 100px;
+            font-size: 15px;
+            height: 25px;
+        }
+
+        .img{
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div>
+        <span>上传文件：</span>
+        <input type="file" id="file" name="file">
+    </div>
+    <div style="margin: 20px 0;">
+        <span>选择特效：</span>
+        <select name="filter" id="filter">
+            <option value="1">反色</option>
+            <option value="2">浮雕</option>
+            <option value="3">模糊</option>
+            <option value="4">灰度</option>
+        </select>
+    </div>
+    <button id="change">提交</button>
+    <div id="img"></div>
+</div>
+</body>
+<script type="text/javascript">
+    $('#change').click(function () {
+        var form = new FormData();
+        form.append('file', $('#file')[0].files[0]);
+        form.append('filter', $('#filter').val());
+        $.ajax({
+            url: "special.php",
+            method: "post",
+            data: form,
+            processData: false, //很重要，告诉jquery不要对form进行处理
+            contentType: false, //很重要，指定为false才能形成正确的Content-Type
+            dataType: "json",
+            success: function (result) {
+                if(result.code == 0){
+                    var img = '<img class="img" src="'+result.src+'">'
+                    $('#img').html(img)
+                }
+            }
+        })
+    })
+</script>
+</html>

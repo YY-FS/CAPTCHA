@@ -10,5 +10,5 @@ define('APPPATH', trim(__DIR__,'/'));
 $root = $_SERVER['SCRIPT_NAME']; //"/code/route/index.php"
 $request = trim($_SERVER['PATH_INFO'],'/'); //"admin/666/1111/213213"
 if($request == ''){
-    $class = 'index'
+    $class = 'index';
 }
